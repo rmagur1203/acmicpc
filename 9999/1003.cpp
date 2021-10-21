@@ -46,6 +46,7 @@ int main()
         scanf("%d", &k);
         fibo_ret res = fibo(k);
         printf("%d %d\n", res.zero, res.one);
+        
     }
     system("pause");
     return 0;

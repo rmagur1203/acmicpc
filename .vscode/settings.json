@@ -7,6 +7,17 @@
         "xiosbase": "cpp",
         "ostream": "cpp",
         "deque": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "functional": "cpp",
+        "random": "cpp",
+        "istream": "cpp",
+        "new": "cpp",
+        "sstream": "cpp",
+        "streambuf": "cpp",
+        "type_traits": "cpp",
+        "limits": "cpp",
+        "utility": "cpp"
     }
 }

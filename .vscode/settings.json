@@ -18,6 +18,9 @@
         "streambuf": "cpp",
         "type_traits": "cpp",
         "limits": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "stack": "cpp",
+        "queue": "cpp",
+        "cmath": "cpp"
     }
 }

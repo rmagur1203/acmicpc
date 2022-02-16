@@ -21,6 +21,9 @@
         "utility": "cpp",
         "stack": "cpp",
         "queue": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "xlocale": "cpp",
+        "xmemory": "cpp",
+        "xstring": "cpp"
     }
 }

@@ -25,7 +25,8 @@
         "xlocale": "cpp",
         "xmemory": "cpp",
         "xstring": "cpp",
-        "ios": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp"
     }
 }

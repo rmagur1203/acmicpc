@@ -24,6 +24,8 @@
         "cmath": "cpp",
         "xlocale": "cpp",
         "xmemory": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "ios": "cpp",
+        "tuple": "cpp"
     }
 }

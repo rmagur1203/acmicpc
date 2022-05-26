@@ -7,6 +7,8 @@ using namespace std;
 int box[1001][1001];
 int days[1001][1001];
 bool visited[1001][1001];
+int dx[] = {0, 1, 0, -1};
+int dy[] = {-1, 0, 1, 0};
 int main()
 {
     ios_base::sync_with_stdio(false);
@@ -22,41 +24,24 @@ int main()
             cin >> box[y][x];
             if (box[y][x] == 1)
             {
-                q.push(make_pair(y, x));
+                q.push(make_pair(x, y));
                 visited[y][x] = true;
             }
         }
     }
-
     int mxday = 0;
-    while (!q.empty())
-    {
-        int x = q.front().second, y = q.front().first;
+    while(!q.empty()){
+        int ox = q.front().first, oy = q.front().second;
         q.pop();
-
-        if (x + 1 < n && !box[y][x + 1])
-        {
-            box[y][x + 1] = 1;
-            days[y][x + 1] = days[y][x] + 1;
-            mxday = max(mxday, days[y][x + 1]);
-        }
-        if (x - 1 >= 0 && !box[y][x - 1])
-        {
-            box[y][x - 1] = 1;
-            days[y][x - 1] = days[y][x] + 1;
-            mxday = max(mxday, days[y][x - 1]);
-        }
-        if (y + 1 < m && !box[y + 1][x])
-        {
-            box[y + 1][x] = 1;
-            days[y + 1][x] = days[y][x] + 1;
-            mxday = max(mxday, days[y + 1][x]);
-        }
-        if (y - 1 >= 0 && !box[y - 1][x])
-        {
-            box[y - 1][x] = 1;
-            days[y - 1][x] = days[y][x] + 1;
-            mxday = max(mxday, days[y - 1][x]);
+        for (int i = 0; i < 4; i++){
+            int x = ox + dx[i], y = oy + dy[i];
+            if (x < 0 || y < 0 || x >= m || y >= n) continue;
+            if (box[y][x] == 0){
+                box[y][x] = 1;
+                days[y][x] = days[oy][ox] + 1;
+                mxday = max(mxday, days[y][x]);
+                q.push(make_pair(x, y));
+            }
         }
     }
     for (int y = 0; y < n; y++)

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <tuple>
+#include <string.h>
 
 #define INF 1e9
 
@@ -15,12 +16,17 @@ void Update() {
         int end = get<1>(edges[i]);
         int weight = get<2>(edges[i]);
 
-        if (dist[start] == INF) continue;
-        if (dist[start] + weight < dist[end]) dist[end] = dist[start] + weight;
+        if (dist[start] + weight < dist[end])
+            dist[end] = dist[start] + weight;
     }
 }
 
-bool Check() {
+bool Bellman_Ford(int n)
+{
+    dist[1] = 0;
+    for (int i = 0; i < n - 1; i++){
+        Update();
+    }
     for (int i = 0; i < edges.size(); i++){
         int start = get<0>(edges[i]);
         int end = get<1>(edges[i]);
@@ -32,15 +38,6 @@ bool Check() {
     return false;
 }
 
-bool Bellman_Ford(int n)
-{
-    dist[1] = 0;
-    for (int i = 0; i < n - 1; i++){
-        Update();
-    }
-    return Check();
-}
-
 int main()
 {
     cin.tie(NULL)->sync_with_stdio(false);
@@ -50,6 +47,8 @@ int main()
     {
         int N, M, W;
         cin >> N >> M >> W;
+        edges.clear();
+        memset(dist, INF, 501);
         for (int i = 0; i < M; i++){
             int s, e, t;
             cin >> s >> e >> t;

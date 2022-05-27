@@ -1,48 +1,52 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<cmath>
 
 using namespace std;
 
-int main(void)
+int cnt[8001];
+int sum = 0;
+
+int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    int N;
+	cin >> N;
 
-    int N, temp, mean, mode = 0, min, max = 0;
-    bool isSecond = false;
-    
-    cin >> N;
-    vector<int> vec(N);
-    vector<int> vec2(8001, 0);
-    for (int i = 0; i < N; i++)
-    {
-        cin >> vec[i];
-        mean += vec[i];
-        temp = (vec[i] <= 0) ? abs(vec[i]) : vec[i] + 4000;
-        vec2[temp]++;
-        if (vec2[temp] > max)
-            max = vec2[temp];
-    }
-    sort(vec.begin(), vec.end());
+    vector<int> arr;
+	for (int i = 0; i < N; i++)
+	{
+        int k;
+		cin >> k;
+		sum += k;
+		cnt[k+4000]++;
+        arr.push_back(k);
+	}
+	
+	sort(arr.begin(), arr.end());
+	
+	int common;
+	int max = 0;
+	
+	for (int i = 0; i < 8001; i++)
+	{
+		if (cnt[i] > max)
+		{
+			max = cnt[i];
+			common = i;
+		}
+	}
+    for (int i = common + 1; i < 8001; i++)
+	{
+		if (cnt[i] == max)
+		{
+			common = i;
+			break;
+		}
+	}
 
-    for (int i = -4000; i < 4001; i++)
-    {
-        temp = i <= 0 ? abs(i) : i + 4000;
-        if (vec2[temp] == max)
-        {
-            mode = i;
-            if (isSecond)
-                break;
-            isSecond = true;
-        }
-    }
-
-    cout << round(mean / (double)N) << '\n';
-    cout << vec[round(N / 2)] << '\n';
-    cout << mode << '\n';
-    min = vec[0];
-    max = vec[vec.size() - 1];
-    cout << max - min << '\n';
+	cout << (int)round(double(sum) / N) << "\n";
+	cout << arr[(N - 1) / 2] << "\n";
+	cout << common - 4000 << "\n";
+	cout << arr[N - 1] - arr[0] << "\n";
 }

@@ -27,6 +27,9 @@
         "xstring": "cpp",
         "tuple": "cpp",
         "string": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "bitset": "cpp",
+        "complex": "cpp",
+        "regex": "cpp"
     }
 }

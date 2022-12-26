@@ -8,18 +8,6 @@
 
 using namespace std;
 
-/**
- * 9527. 1의 개수 세기
- * https://www.acmicpc.net/problem/9527
- * 
- * 1. A와 B를 입력받는다.
- * 2. A와 B 사이의 모든 수를 2진수로 변환한다.
- * 3. 2진수로 변환한 수에서 1의 개수를 센다.
- * 4. 1의 개수를 모두 더한다.
- * 
- * 분류: 비트마스킹
-*/
-
 int cv[4] = { 0, 1, 1, 2 };
 int cve[16] = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 };
 
@@ -81,26 +69,10 @@ long long int recCalc(long long int sI, long long int eI, long long int radix) {
     return eV;
 }
 
-long long int calcB(long long int k) {
-    long long int cnt = 0;
-    while (k > 0) {
-        cnt += k & 1;
-        k = k >> 1;
-    }
-    return cnt;
-}
+int main(){
+    cin.tie(NULL)->sync_with_stdio(false);
 
-long long int answer(long long int k) {
-    long long int testSum = 0;
-    for (int i = 0; i <= k; i++) {
-        testSum += calcB(i);
-    }
-    return testSum;
-}
-
-long long int solve(long long int k) {
-    long long int A = 1;
-    long long int B = k;
+    cin >> A >> B;
     long long int initRadix = calcRadix(B);
 
     long long int* sum = new long long int[B / initRadix + 1];
@@ -113,19 +85,5 @@ long long int solve(long long int k) {
     delete[] sum;
     sumA = sumA + recCalc(A / initRadix * initRadix, A - 1, initRadix / 4);
     sumB = sumB + recCalc(B / initRadix * initRadix, B, initRadix / 4);
-    return sumB - sumA;
-}
-
-int main(){
-    cin.tie(NULL)->sync_with_stdio(false);
-
-    cin >> A >> B;
-
-    for (long long int i = 1; i <= 1e16; i++) {
-        if (i % 100000 == 0)
-            break;
-        if (answer(i) != solve(i)){
-            return 0;
-        }
-    }
+    cout << sumB - sumA << endl;
 }

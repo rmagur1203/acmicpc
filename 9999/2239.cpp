@@ -76,10 +76,11 @@ void fill(int y, int x){
 int main(){
     cin.tie(NULL)->sync_with_stdio(false);
 
-    for (int y = 0; y < 5; y++){
-        for (int x = 0; x < 5; x++){
-            int n;
-            cin >> n;
+    for (int y = 0; y < 9; y++){
+        char line[10];
+        cin >> line;
+        for (int x = 0; x < 9; x++){
+            int n = line[x] - '0';
             sudoku[y][x] = n;
             row[y][n] = true;
             col[x][n] = true;

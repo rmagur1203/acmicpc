@@ -30,6 +30,10 @@
         "unordered_map": "cpp",
         "bitset": "cpp",
         "complex": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "optional": "cpp",
+        "ratio": "cpp",
+        "system_error": "cpp",
+        "variant": "cpp"
     }
 }

@@ -34,6 +34,7 @@
         "optional": "cpp",
         "ratio": "cpp",
         "system_error": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "map": "cpp"
     }
 }

@@ -8,92 +8,90 @@
 using namespace std;
 int N, K;
 
-long long gcd(long long a, long long b) {
-    if (b == 0) return a;
-    return gcd(b, a%b);
-}
-long long lcm(long long a, long long b) {
-    return a * b / gcd(a, b);
+long long int gcd(long long int a, long long int b)
+{
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
 }
 
-long long rem(string k)
+long long int rem(string s, int k)
 {
-    long long ret = 0;
-    for (int i = 0; i < k.size(); i++){
+    long long int ret = 0;
+    for (int i = 0; i < s.size(); i++)
+    {
         ret *= 10;
-        ret += k[i] - '0';
-        ret %= K;
+        ret += s[i] - '0';
+        ret %= k;
     }
     return ret;
 }
 
-long long _rem10_store[51];
-long long rem10(int exp) {
-    if (_rem10_store[exp] != 0) return _rem10_store[exp];
-    long long ret = 1;
-    for (int i = 0; i < exp; i++){
-        ret *= 10;
-        ret %= K;
-    }
-    return _rem10_store[exp] = ret;
+long long int _rem10_store[51];
+long long int rem10(int exp)
+{
+    if (exp == 0)
+        return 1 % K;
+    if (_rem10_store[exp] != -1)
+        return _rem10_store[exp];
+    return _rem10_store[exp] = (rem10(exp - 1) * 10) % K;
 }
 
 vector<pair<int, int>> set; // 미리 나머지 연산된 집합
 
-int _dp[32768];
-void dp(int flag) {
-    if (flag == (1 << N) - 1) return;
-    // if (flag != 0 && flag != 1) return;
-    // cout << flag << '\n';
-    int min_sel_idx = N;
-    for (int i = N-1; i >= 0; i--) {
-        if (flag & (1 << i)) min_sel_idx = i;
-    }
-    // cout << flag << ' ' << min_sel_idx << '\n';
-    // if (flag != 0) return;
-    for (int i = 0; i < min_sel_idx; i++)
+long long int _dp[32768][100];
+void dp()
+{
+    for (int flag = 0; flag < (1 << N); flag++)
     {
-        if (flag & (1 << i)) continue;
-        // cout << (flag | (1 << i)) << '\n';
-        _dp[flag | (1 << i)] = (_dp[flag] * rem10(set[i].second) + set[i].first) % K;
-        dp(flag | (1 << i));
+        for (int i = 0; i < N; i++)
+        {
+            int next = flag | (1 << i);
+            if (flag & (1 << i))
+                continue;
+            for (int rem = 0; rem < K; rem++)
+            {
+                int R = ((rem * rem10(set[i].second)) % K + set[i].first) % K;
+                _dp[next][R] += _dp[flag][rem];
+            }
+        }
     }
 }
 
-int main(){
+int main()
+{
     cin.tie(NULL)->sync_with_stdio(false);
 
     vector<string> temp;
 
     cin >> N;
-    
-    for (int i = 0; i < N; i++){
-        string k;
-        cin >> k;
-        temp.push_back(k);
+
+    for (int i = 0; i < N; i++)
+    {
+        string s;
+        cin >> s;
+        temp.push_back(s);
     }
 
     cin >> K;
 
-    for (auto k : temp) {
-        set.push_back({rem(k), k.size()});
+    for (auto s : temp)
+    {
+        set.push_back({rem(s, K), s.size()});
     }
 
     temp.clear();
 
-    fill(_dp, _dp + 32768, -1);
+    fill(_rem10_store, _rem10_store + 51, -1);
+    _dp[0][0] = 1;
+    dp();
 
-    dp(0);
+    long long int cnt = _dp[(1 << N) - 1][0];
+    long long int full = 1;
+    for (int i = 1; i <= N; i++)
+        full *= i;
 
-    int cnt = 0;
-    for (int i = 0; i <= 32767; i++){
-        if (_dp[i] == 0) cnt++;
-    }
-
-    int full = 1;
-    for (int i = 1; i <= N; i++) full *= i;
-
-    long long g = gcd(cnt, full);
+    long long int g = gcd(cnt, full);
 
     cout << cnt / g << "/" << full / g << '\n';
 }
